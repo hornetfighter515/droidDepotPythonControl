@@ -4,10 +4,15 @@ from time import sleep
 from random import randrange
 
 
+lastSound = -1
 async def play_sound(d):
     # number = input("Please input a number of which sound to play. ")
-    number = randrange(0,5)
-    await d.play_sound(f"0{number}","00")
+    global lastSound
+    sound = lastSound
+    while sound == lastSound:
+        sound = randrange(0,5)
+    lastSound = sound
+    await d.play_sound(f"0{sound}","00")
 
 runningDroid = True
 
@@ -35,7 +40,7 @@ async def main():
         global runningDroid
         while runningDroid:
             # next, await input
-            command = input("Please input a command.")
+            command = input("Please input a command > ")
             # next, parse that command
             c = command.lower()[0:1]
             if c in commands.keys():
