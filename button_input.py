@@ -1,7 +1,7 @@
 import droid_commands as d
 import asyncio
 
-import RPi.GPIO as GPIO
+import lgpio as GPIO
 
 FEATURE = "feature"
 NOISE = "noise"
@@ -38,10 +38,9 @@ def play_sound():
 
 
 def main():
-    # GPIO.setup(pins[FEATURE], GPIO.IN)
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(pins[NOISE], GPIO.IN)
-    GPIO.add_event_detect(pins[NOISE], GPIO.RISING, callback=play_sound)
+    pi = GPIO.gpiochip_open(0)
+    GPIO.gpio_claim_input(pi, pins[NOISE])
+    GPIO.callback(pi, pins[NOISE], edge=1, func=play_sound)
     try:
         asyncio.run( d.start_droid())
     finally:
