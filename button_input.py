@@ -34,8 +34,9 @@ pins = {
 }
 
 
-def play_sound():
-    asyncio.run(d.play_sound())
+async def play_sound():
+    print("Playing sound")
+    await d.play_sound()
 
 
 async def main():
