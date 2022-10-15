@@ -25,9 +25,9 @@ class Droid():
         print("Connecting")
         self.droid = BleakClient(self.profile)
         await self.droid.connect()
-        while not self.droid.is_connected and timeout < 10:
-            sleep (.1)
-            timeout += .1
+        # while not self.droid.is_connected and timeout < 10:
+        #     sleep (.1)
+        #     timeout += .1
         print ("Connected!")
         connectCode = bytearray.fromhex("222001")
         await self.droid.write_gatt_char(0x000d, connectCode, False)
