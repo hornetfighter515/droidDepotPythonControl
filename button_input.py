@@ -2,6 +2,7 @@ import droid_commands as d
 import asyncio
 
 import RPi.GPIO as GPIO
+from symbol import arglist
 
 FEATURE = "feature"
 NOISE = "noise"
@@ -32,6 +33,9 @@ pins = {
     LEFT:25
 }
 
+def play_sound():
+    asyncio.run(d.play_sound())
+
 
 async def main():
     # GPIO.setup(pins[FEATURE], GPIO.IN)
@@ -39,7 +43,7 @@ async def main():
     GPIO.setup(pins[NOISE], GPIO.IN)
     try:
         await d.start_droid()
-        GPIO.add_event_detect(pins[NOISE], GPIO.RISING, callback=d.play_sound)
+        GPIO.add_event_detect(pins[NOISE], GPIO.RISING, callback=play_sound, arglist=[d])
     finally:
         await d.stop_droid()
 
