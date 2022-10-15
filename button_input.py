@@ -2,7 +2,6 @@ import droid_commands as d
 import asyncio
 
 import RPi.GPIO as GPIO
-from symbol import arglist
 
 FEATURE = "feature"
 NOISE = "noise"
