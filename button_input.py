@@ -15,10 +15,10 @@ LEFT = "left"
 
 
 pins = {
-    4:FEATURE,
-    FEATURE:4,
-    17:NOISE,
-    NOISE:17,
+    17:FEATURE,
+    FEATURE:17,
+    4:NOISE,
+    NOISE:4,
     22:ROTATE_RIGHT,
     ROTATE_RIGHT:22,
     5:ROTATE_LEFT,
@@ -51,6 +51,7 @@ async def main():
     except KeyboardInterrupt:
         print("Thanks for using")
     finally:
+        GPIO.gpiochip_close(pi)
         await d.stop_droid()
 
         
