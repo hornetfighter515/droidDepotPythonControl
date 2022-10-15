@@ -1,5 +1,6 @@
 import droid_commands as d
 import asyncio
+from time import sleep
 
 import lgpio as GPIO
 
@@ -43,6 +44,8 @@ async def main():
     GPIO.callback(pi, pins[NOISE], edge=1, func=play_sound)
     try:
         await d.start_droid()
+        while True:
+            sleep(10)
     finally:
         await d.stop_droid()
 
