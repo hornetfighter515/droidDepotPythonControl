@@ -35,6 +35,7 @@ pins = {
 
 async def main():
     # GPIO.setup(pins[FEATURE], GPIO.IN)
+    GPIO.setmode(GPIO.BCM)
     GPIO.setup(pins[NOISE], GPIO.IN)
     try:
         await d.start_droid()
