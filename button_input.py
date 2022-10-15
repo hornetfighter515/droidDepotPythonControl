@@ -17,8 +17,8 @@ LEFT = "left"
 pins = {
     4:FEATURE,
     FEATURE:4,
-    27:NOISE,
-    NOISE:27,
+    17:NOISE,
+    NOISE:17,
     22:ROTATE_RIGHT,
     ROTATE_RIGHT:22,
     5:ROTATE_LEFT,
@@ -34,9 +34,9 @@ pins = {
 }
 
 
-async def play_sound():
+def play_sound():
     print("Playing sound")
-    await d.play_sound()
+    asyncio.run_coroutine_threadsafe( d.play_sound())
 
 
 async def main():
