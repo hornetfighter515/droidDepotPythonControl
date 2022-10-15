@@ -44,9 +44,12 @@ async def main():
     GPIO.gpio_claim_input(pi, pins[NOISE])
     GPIO.callback(pi, pins[NOISE], edge=1, func=play_sound)
     try:
+        sleep(2)
         await d.start_droid()
         while True:
             sleep(10)
+    except KeyboardInterrupt:
+        print("Thanks for using")
     finally:
         await d.stop_droid()
 
