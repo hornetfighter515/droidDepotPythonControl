@@ -37,18 +37,18 @@ def play_sound():
     asyncio.run(d.play_sound())
 
 
-async def main():
+def main():
     # GPIO.setup(pins[FEATURE], GPIO.IN)
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(pins[NOISE], GPIO.IN)
+    GPIO.add_event_detect(pins[NOISE], GPIO.RISING, callback=play_sound)
     try:
-        await d.start_droid()
-        GPIO.add_event_detect(pins[NOISE], GPIO.RISING, callback=play_sound)
+        asyncio.run( d.start_droid())
     finally:
-        await d.stop_droid()
+        asyncio.run( d.stop_droid())
 
         
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
