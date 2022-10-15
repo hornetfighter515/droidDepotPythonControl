@@ -34,8 +34,8 @@ pins = {
 }
 
 
-def play_sound():
-    print("Playing sound")
+def play_sound(chip, gpio, level, time):
+    print(f"Playing sound at {time}")
     asyncio.run_coroutine_threadsafe( d.play_sound())
 
 
