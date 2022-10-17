@@ -4,57 +4,46 @@ from time import sleep
 
 import lgpio as GPIO
 
-FEATURE = "feature"
-NOISE = "noise"
-ROTATE_RIGHT = "rotate-right"
-ROTATE_LEFT = "rotate-left"
-RIGHT = "right"
-UP = "up"
-DOWN = "down"
-LEFT = "left"
+NOISE = 16
 
 
-pins = {
-    17:FEATURE,
-    FEATURE:17,
-    4:NOISE,
-    NOISE:4,
-    22:ROTATE_RIGHT,
-    ROTATE_RIGHT:22,
-    5:ROTATE_LEFT,
-    ROTATE_LEFT:5,
-    6: RIGHT,
-    RIGHT:6,
-    23: UP,    
-    UP : 23,
-    24: DOWN,
-    DOWN: 24,
-    25: LEFT,
-    LEFT:25
-}
+todo = []
 
 
-def play_sound(chip, gpio, level, time):
+def play_sound(handle, gpio, edge, time):
     print(f"Playing sound at {time}")
-    asyncio.run_coroutine_threadsafe( d.play_sound())
+    todo.append(d.play_sound())
 
 
-async def main():
-    pi = GPIO.gpiochip_open(0)
-    GPIO.gpio_claim_input(pi, pins[NOISE])
-    GPIO.callback(pi, pins[NOISE], edge=1, func=play_sound)
+async def droid_connect(pi):
     try:
-        sleep(2)
         await d.start_droid()
         while True:
-            sleep(10)
+            if len(todo) > 0:
+                await todo[0]
+                todo.pop(0)
     except KeyboardInterrupt:
         print("Thanks for using")
     finally:
         GPIO.gpiochip_close(pi)
         await d.stop_droid()
 
-        
+
+async def main():
+    pi = GPIO.gpiochip_open(0)
+    print(pi)
+    if pi < 0:
+        return
+
+    GPIO.gpio_claim_alert(pi, NOISE, GPIO.RISING_EDGE)
+    GPIO.gpio_set_debounce_micros(pi, NOISE, 200)
+    print("Configuring callback")
+    loop = asyncio.get_running_loop()
+    cb = GPIO.callback(pi, NOISE, func=play_sound)
+    print("Callback configured")
+    await droid_connect(pi)
+
+
 
 
 if __name__ == "__main__":
