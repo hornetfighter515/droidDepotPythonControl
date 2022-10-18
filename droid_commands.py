@@ -22,6 +22,9 @@ async def play_sound():
     await d.play_sound(f"0{sound}","00")
 
 
+async def play_specific_sound(bank, sound):
+    await d.play_sound(bank, sound)
+
 
 async def start_droid():
     """
@@ -35,3 +38,4 @@ async def start_droid():
 async def stop_droid():
     global d
     await d.disconnect()
+    
