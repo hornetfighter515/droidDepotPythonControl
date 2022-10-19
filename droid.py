@@ -79,7 +79,7 @@ class Droid():
         ledOnCommand = bytearray.fromhex(f"27420f44440048{leds}")
         await self.droid.write_gatt_char(0x000d, ledOnCommand)
     
-    def move (self, degrees, duration):
+    async def move (self, degrees, duration):
         thrust = self.__throttle_angle_to_thrust__(degrees)
         
     async def play_sound(self, sound_id=None, bank_id=None, cycle=False, volume=None):
