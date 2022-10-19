@@ -28,8 +28,8 @@ async def play_specific_sound(bank, sound):
 
 async def move_droid(direction):
     global d
-    await d.move_motors(droid.Directions.FORWARD, droid.Motors.LEFT, "ff")
-    await d.move_motors(droid.Directions.FORWARD, droid.Motors.RIGHT,"ff")
+    await d.move_motors(droid.Directions.FORWARD, droid.Motors.LEFT, "FF")
+    await d.move_motors(droid.Directions.FORWARD, droid.Motors.RIGHT,"FF")
 
 
 async def stop_droid():
