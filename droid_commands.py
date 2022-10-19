@@ -38,7 +38,7 @@ async def move_manually(direction, motor, strength):
     await d.move_motors(direction, motor, strength)
 
 
-async def stop_droid():
+async def move_stop():
     global d
     await move_manually(droid.Directions.FORWARD, droid.Motors.LEFT, "00")
     await move_manually(droid.Directions.FORWARD, droid.Motors.RIGHT, "00")
