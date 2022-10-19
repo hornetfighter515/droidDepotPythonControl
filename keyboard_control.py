@@ -52,6 +52,7 @@ async def main():
             "s": backward,
             "d": right,
             "x": stop,
+            "z": select_speed,
             #"e": rotate counter-clockwise,
             #"r": rotate clockwise,
             #"f": special effect
