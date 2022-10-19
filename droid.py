@@ -2,7 +2,19 @@ import asyncio
 from time import sleep
 from bleak import BleakScanner, BleakClient, BleakError
 
+class Motors:
+    LEFT=0,
+    RIGHT=1,
+    HEAD=2
+    # Directions
+class Directions:
+    FORWARD = 0
+    LEFT = 0
+    RIGHT = 8
+    BACKWARD = 8
+
 class Droid():
+
     def __init__(self, profile):
         print("Initializing")
         self.disabledLeds = 0x00
@@ -81,6 +93,12 @@ class Droid():
     
     async def move (self, degrees, duration):
         thrust = self.__throttle_angle_to_thrust__(degrees)
+
+    
+    async def move_motors(self, direction, motor, strength):
+        move_selection = bytearray.fromhex(f"2942 0546 {direction}{motor}{strength} 012C 0000")
+        await self.droid.write_gatt_char(0x000d, move_selection)
+
         
     async def play_sound(self, sound_id=None, bank_id=None, cycle=False, volume=None):
         if volume:

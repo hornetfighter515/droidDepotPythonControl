@@ -31,7 +31,6 @@ async def droid_connect(pi):
 
 async def main():
     pi = GPIO.gpiochip_open(0)
-    print(pi)
     if pi < 0:
         return
 
