@@ -33,7 +33,7 @@ async def left(d):
 async def right(d):
     await d.move_droid(Directions.RIGHT)
 
-async def stop(d):
+async def stop_droid(d):
     await d.stop_droid()
 
 
@@ -51,7 +51,7 @@ async def main():
             "a": left,
             "s": backward,
             "d": right,
-            "x": stop,
+            "x": stop_droid,
             "z": select_speed,
             #"e": rotate counter-clockwise,
             #"r": rotate clockwise,
