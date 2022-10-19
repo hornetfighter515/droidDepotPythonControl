@@ -3,10 +3,11 @@ from time import sleep
 from bleak import BleakScanner, BleakClient, BleakError
 
 class Motors:
-    LEFT=0,
-    RIGHT=1,
+    LEFT=0
+    RIGHT=1
     HEAD=2
-    # Directions
+
+# Directions
 class Directions:
     FORWARD = 0
     LEFT = 0
@@ -96,7 +97,7 @@ class Droid():
 
     
     async def move_motors(self, direction, motor, strength):
-        move_selection = bytearray.fromhex("2942 0546 {}{}{} 012C 0000".format(direction, motor, strength))
+        move_selection = bytearray.fromhex("29420546{}{}{}012C0000".format(direction, motor, strength))
         await self.droid.write_gatt_char(0x000d, move_selection)
 
         
