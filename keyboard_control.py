@@ -14,6 +14,13 @@ async def select_noise(d):
     sound = input("\tSound> ")
     await d.play_specific_sound(bank, sound)
 
+
+async def select_speed(d):
+    direction = input("\tDirection> ")
+    motor = input("\tMotor> ")
+    speed = input("\tSpeed> ")
+    await d.move_manually(direction, motor, speed)
+
 async def forward(d):
     await d.move_droid(Directions.FORWARD)
 
@@ -28,6 +35,7 @@ async def right(d):
 
 async def stop(d):
     await d.stop_droid()
+
 
 
 async def quit(d):
