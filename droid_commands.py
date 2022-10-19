@@ -6,6 +6,15 @@ from random import randrange
 d = ""
 
 
+# Directions
+class Directions:
+    STOP = 0
+    FORWARD = 1
+    LEFT = 2
+    RIGHT = 3
+    BACKWARD = 4
+
+
 lastSound = -1
 async def play_sound():
     # number = input("Please input a number of which sound to play. ")
@@ -24,6 +33,13 @@ async def play_sound():
 
 async def play_specific_sound(bank, sound):
     await d.play_sound(bank, sound)
+
+
+current_movement = [Directions.STOP]
+async def move_droid(direction):
+    global d
+    d.move
+
 
 
 async def start_droid():
