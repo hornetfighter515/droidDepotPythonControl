@@ -77,6 +77,7 @@ async def main():
     GPIO.gpio_claim_alert(pi, UP, GPIO.BOTH_EDGES)
     
     GPIO.gpio_set_debounce_micros(pi, NOISE, 200)
+    GPIO.gpio_set_debounce_micros(pi, UP, 200)
 
     cbs = []
     print("Configuring callbacks")
@@ -85,7 +86,7 @@ async def main():
     cbs.append(GPIO.callback(pi, NOISE, func=play_sound))
 
     # up
-    cbs.append(GPIO.callback(pi, NOISE, func=play_sound))
+    cbs.append(GPIO.callback(pi, UP, func=move))
     print("Callback configured")
     await droid_connect(pi)
 
