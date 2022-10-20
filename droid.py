@@ -10,9 +10,9 @@ class Motors:
 # Directions
 class Directions:
     FORWARD = 0
-    LEFT = 0
-    RIGHT = 8
     BACKWARD = 8
+    ROTATE_LEFT = 0
+    ROTATE_RIGHT = 8
 
 class Droid():
 
