@@ -1,3 +1,4 @@
+from droid import Directions
 import droid_commands as d
 import asyncio
 from time import sleep
@@ -33,25 +34,30 @@ def move(handle, gpio, edge, time):
 
     if gpio == RIGHT:
         print("Pressed right")
+        todo.append(d.move_droid(right=True))
     elif gpio == LEFT:
         print("Pressed left")
+        todo.append(d.move_droid(left=True))
     elif gpio == UP:
         print("Pressed forward")
         todo.append(d.move_droid(forward=True))
     elif gpio == DOWN:
+        todo.append(d.move_droid(backward=True))
         print("Pressed backward")
 
 
 def move_head(handle, gpio, edge, time):
-    todo.append(d.move_stop())
+    todo.append(d.stop_rotate_head())
 
     if edge == 0:
         return
     
     if gpio == ROT_LEFT:
         print("Rotating left")
+        todo.append(d.rotate_head(Directions.ROTATE_LEFT))
     elif gpio == ROT_RIGHT:
         print("Rotating right")
+        todo.append(d.rotate_head(d.rotate_head(Directions.ROTATE_RIGHT))
 
 
 
@@ -74,11 +80,30 @@ async def main():
     if pi < 0:
         return
 
-    GPIO.gpio_claim_alert(pi, NOISE, GPIO.RISING_EDGE)
-    GPIO.gpio_claim_alert(pi, UP, GPIO.BOTH_EDGES)
-    
+    GPIO.gpio_claim_alert(pi, NOISE, GPIO.RISING_EDGE)    
     GPIO.gpio_set_debounce_micros(pi, NOISE, 200)
+
+    # feet
+    GPIO.gpio_claim_alert(pi, UP, GPIO.BOTH_EDGES)
     GPIO.gpio_set_debounce_micros(pi, UP, 200)
+
+    GPIO.gpio_claim_alert(pi, DOWN, GPIO.BOTH_EDGES)
+    GPIO.gpio_set_debounce_micros(pi, DOWN, 200)
+
+    GPIO.gpio_claim_alert(pi, LEFT, GPIO.BOTH_EDGES)
+    GPIO.gpio_set_debounce_micros(pi, LEFT, 200)
+
+    GPIO.gpio_claim_alert(pi, RIGHT, GPIO.BOTH_EDGES)
+    GPIO.gpio_set_debounce_micros(pi, RIGHT, 200)
+
+    # head
+    GPIO.gpio_claim_alert(pi, ROT_LEFT, GPIO.BOTH_EDGES)
+    GPIO.gpio_set_debounce_micros(pi, ROT_LEFT, 200)
+
+    GPIO.gpio_claim_alert(pi, ROT_RIGHT, GPIO.BOTH_EDGES)
+    GPIO.gpio_set_debounce_micros(pi, ROT_RIGHT, 200)
+
+    
 
     cbs = []
     print("Configuring callbacks")
@@ -86,8 +111,16 @@ async def main():
     # noise
     cbs.append(GPIO.callback(pi, NOISE, func=play_sound))
 
-    # up
+    # feet
     cbs.append(GPIO.callback(pi, UP, func=move))
+    cbs.append(GPIO.callback(pi, DOWN, func=move))    
+    cbs.append(GPIO.callback(pi, LEFT, func=move))
+    cbs.append(GPIO.callback(pi, RIGHT, func=move))
+
+    # head
+    cbs.append(GPIO.callback(pi, ROT_LEFT, func=move_head))
+    cbs.append(GPIO.callback(pi, ROT_RIGHT, func=move_head))
+
     print("Callback configured")
     await droid_connect(pi)
 
