@@ -37,6 +37,7 @@ def move(handle, gpio, edge, time):
         print("Pressed left")
     elif gpio == UP:
         print("Pressed forward")
+        todo.append(d.move_droid(forward=True))
     elif gpio == DOWN:
         print("Pressed backward")
 
