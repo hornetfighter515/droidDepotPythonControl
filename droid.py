@@ -2,7 +2,20 @@ import asyncio
 from time import sleep
 from bleak import BleakScanner, BleakClient, BleakError
 
+class Motors:
+    LEFT=0
+    RIGHT=1
+    HEAD=2
+
+# Directions
+class Directions:
+    FORWARD = 0
+    BACKWARD = 8
+    ROTATE_LEFT = 0
+    ROTATE_RIGHT = 8
+
 class Droid():
+
     def __init__(self, profile):
         print("Initializing")
         self.disabledLeds = 0x00
@@ -25,9 +38,9 @@ class Droid():
         print("Connecting")
         self.droid = BleakClient(self.profile)
         await self.droid.connect()
-        while not self.droid.is_connected and timeout < 10:
-            sleep (.1)
-            timeout += .1
+        # while not self.droid.is_connected and timeout < 10:
+        #     sleep (.1)
+        #     timeout += .1
         print ("Connected!")
         connectCode = bytearray.fromhex("222001")
         await self.droid.write_gatt_char(0x000d, connectCode, False)
@@ -79,8 +92,14 @@ class Droid():
         ledOnCommand = bytearray.fromhex(f"27420f44440048{leds}")
         await self.droid.write_gatt_char(0x000d, ledOnCommand)
     
-    def move (self, degrees, duration):
+    async def move (self, degrees, duration):
         thrust = self.__throttle_angle_to_thrust__(degrees)
+
+    
+    async def move_motors(self, direction, motor, strength):
+        move_selection = bytearray.fromhex("29420546{}{}{}012C0000".format(direction, motor, strength))
+        await self.droid.write_gatt_char(0x000d, move_selection)
+
         
     async def play_sound(self, sound_id=None, bank_id=None, cycle=False, volume=None):
         if volume:
