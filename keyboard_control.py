@@ -15,6 +15,9 @@ async def select_noise(d):
     await d.play_specific_sound(bank, sound)
 
 
+async def play_sound(d):
+    await d.play_sound()
+
 async def select_speed(d):
     direction = input("\tDirection> ")
     motor = input("\tMotor> ")
@@ -56,7 +59,7 @@ async def main():
             #"e": rotate counter-clockwise,
             #"r": rotate clockwise,
             #"f": special effect
-            "n": d.play_sound,
+            "n": play_sound,
             "m": select_noise,
             "q": quit
             }
