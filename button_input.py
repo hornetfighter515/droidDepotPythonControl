@@ -57,7 +57,7 @@ def move_head(handle, gpio, edge, time):
         todo.append(d.rotate_head(Directions.ROTATE_LEFT))
     elif gpio == ROT_RIGHT:
         print("Rotating right")
-        todo.append(d.rotate_head(d.rotate_head(Directions.ROTATE_RIGHT))
+        todo.append(d.rotate_head(Directions.ROTATE_RIGHT))
 
 
 
