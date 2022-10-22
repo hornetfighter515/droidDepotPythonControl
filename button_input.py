@@ -5,15 +5,15 @@ from time import sleep
 
 import lgpio as GPIO
 
-NOISE = 16
+NOISE = 23
 
 LEFT = 26
-DOWN = 27
-UP = 25
-RIGHT = 19
+DOWN = 6
+UP = 5
+RIGHT = 25
 
-ROT_LEFT = 6
-ROT_RIGHT = 5
+ROT_LEFT = 19
+ROT_RIGHT =24
 
 
 todo = []
